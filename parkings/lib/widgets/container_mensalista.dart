@@ -22,7 +22,7 @@ class ContainerMensalista extends StatelessWidget {
           color: Color(0xff28D5E2), borderRadius: BorderRadius.circular(5)),
       height: 150,
       padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

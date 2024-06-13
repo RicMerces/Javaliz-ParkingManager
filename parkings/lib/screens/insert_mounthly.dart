@@ -72,8 +72,9 @@ class _InsertMounthlyState extends State<InsertMounthly> {
             ParkBtn(
               title: "Inserir",
               onPressed: () {
-                final cpf = controller.text; // Obtém o CPF do campo de entrada
-                entradaMensalistaController.registrarEntradaMensalista(context,
+                final cpf = controller.text;
+                entradaMensalistaController.registrarEntradaMensalista(
+                  context,
                   cpf,
                 );
               },

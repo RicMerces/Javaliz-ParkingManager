@@ -21,6 +21,10 @@ class _MounthlyOccupiedState extends State<MounthlyOccupied> {
     mensalistaController.fetchMensalistasEstacionados();
   }
 
+  Future<void> _refreshData() async {
+    await mensalistaController.fetchMensalistasEstacionados();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,64 +40,58 @@ class _MounthlyOccupiedState extends State<MounthlyOccupied> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 15,
-              ),
-              child: Text(
-                "Veja vagas ocupadas de Mensalistas",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xff191E26),
-                  fontWeight: FontWeight.bold,
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Text(
+                  "Veja vagas ocupadas de Mensalistas",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xff191E26),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Obx(() {
-              final mensalistaEstacionados =
-                  mensalistaController.mensalistasEstacionados;
+              Expanded(
+                child: Obx(() {
+                  final mensalistasEstacionados =
+                      mensalistaController.mensalistasEstacionados;
 
-              if (mensalistaEstacionados.isEmpty) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  child: const Center(
-                    child: Text("Nenhum Horista foi encontrado estacionado"),
-                  ),
-                );
-              } else {
-                return Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: mensalistaEstacionados.length,
+                  if (mensalistasEstacionados.isEmpty) {
+                    return const Center(
+                      child:
+                          Text("Nenhum Mensalista foi encontrado estacionado"),
+                    );
+                  } else {
+                    return ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: mensalistasEstacionados.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final mensalista = mensalistaEstacionados[index];
+                        final mensalista = mensalistasEstacionados[index];
                         return ContainerMensalista(
                           cpf: mensalista['cpf'],
                           horista: mensalista['dataHoraEntrada'],
                           placa: mensalista['placa'],
                           id: index,
-                          delete: () =>
-                              mensalistaController.registrarSaidaMensalista(
-                            mensalista['cpf'],
-                          ),
+                          delete: () async {
+                            await mensalistaController
+                                .registrarSaidaMensalista(mensalista['cpf']);
+                            await _refreshData();
+                          },
                         );
                       },
-                    ),
-                  ),
-                );
-              }
-            }),
-          ],
+                    );
+                  }
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controller/mensalista_estacionado_controller.dart';
 
-class MensalistasEstacionadosList extends StatefulWidget {
+import '../controller/lista_mensalistas_controller.dart';
+
+class MounthlyCreatedList extends StatefulWidget {
   @override
-  _MensalistasEstacionadosListState createState() =>
-      _MensalistasEstacionadosListState();
+  State<MounthlyCreatedList> createState() => _MounthlyCreatedListState();
 }
 
-class _MensalistasEstacionadosListState
-    extends State<MensalistasEstacionadosList> {
-  final MensalistasEstacionadosController mensalistasController =
-      Get.put(MensalistasEstacionadosController());
+class _MounthlyCreatedListState extends State<MounthlyCreatedList> {
+  final MensalistasCriadosController mensalistasController =
+      Get.put(MensalistasCriadosController());
 
   @override
   void initState() {
     super.initState();
-    mensalistasController.fetchMensalistasEstacionados();
-  }
-
-  Future<void> _refreshData() async {
-    await mensalistasController.fetchMensalistasEstacionados();
+    mensalistasController.fetchMensalistasCriados();
   }
 
   @override
@@ -32,76 +27,62 @@ class _MensalistasEstacionadosListState
         foregroundColor: Colors.black,
         elevation: 0,
         title: Text(
-          "Mensalistas Estacionados",
+          "Mensalistas criados",
           style: TextStyle(
             color: Colors.black,
           ),
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: _refreshData,
-        child: Obx(
-          () {
-            final mensalistasEstacionados =
-                mensalistasController.mensalistasEstacionados;
+      body: Obx(
+        () {
+          final mensalistasCriados = mensalistasController.mensalistasCriados;
 
-            if (mensalistasEstacionados.isEmpty) {
-              return Center(
-                child: Text("Nenhum mensalista está estacionado no momento."),
-              );
-            } else {
-              return Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 10,
-                ),
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: mensalistasEstacionados.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final mensalista = mensalistasEstacionados[index];
-                    return Container(
-                      decoration: BoxDecoration(
+          if (mensalistasCriados.isEmpty) {
+            return Center(
+              child: Text("Nenhum mensalista foi criado ainda."),
+            );
+          } else {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 10,
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: mensalistasCriados.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final mensalista = mensalistasCriados[index];
+                  return Container(
+                    decoration: BoxDecoration(
                         color: Color(0xffBFF0FF),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      height: 150,
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.all(5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "CPF: ${mensalista['cpf']}",
-                            style: TextStyle(
-                              color: Color(0xff2A74F7),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            ),
+                        borderRadius: BorderRadius.circular(5)),
+                    height: 150,
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "CPF: ${mensalista.cpf}",
+                          style: TextStyle(
+                            color: Color(0xff2A74F7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
                           ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () async {
-                              await mensalistasController
-                                  .registrarSaidaMensalista(mensalista['cpf']);
-                              await _refreshData();
-                            },
-                            child: Text("Registrar Saída"),
-                          ),
-                          // Adicione outros campos do mensalista aqui, por exemplo:
-                          // Text("Nome: ${mensalista['nome']}"),
-                          // Text("Telefone: ${mensalista['tel']}"),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              );
-            }
-          },
-        ),
+                        ),
+                        SizedBox(height: 10),
+                        // Adicione outros campos do mensalista aqui, por exemplo:
+                        // Text("Nome: ${mensalista['nome']}"),
+                        // Text("Telefone: ${mensalista['tel']}"),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          }
+        },
       ),
     );
   }

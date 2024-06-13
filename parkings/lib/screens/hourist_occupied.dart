@@ -46,8 +46,8 @@ class _HouristsOccupiedsState extends State<HouristsOccupieds> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
+              const Padding(
+                padding: EdgeInsets.only(left: 15),
                 child: Text(
                   "Veja vagas ocupadas de Horistas",
                   style: TextStyle(
@@ -56,6 +56,9 @@ class _HouristsOccupiedsState extends State<HouristsOccupieds> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Expanded(
                 child: Obx(() {

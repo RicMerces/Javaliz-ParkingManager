@@ -4,7 +4,7 @@ import 'package:parkings/screens/openin.dart';
 
 void main() {
   runApp(
-    GetMaterialApp(
+    const GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Openin(),
     ),

@@ -21,7 +21,7 @@ class _CreateHouristState extends State<CreateHourist> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Criar Horistas",
           style: TextStyle(
             color: Colors.black,
@@ -38,7 +38,7 @@ class _CreateHouristState extends State<CreateHourist> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(

@@ -25,7 +25,7 @@ class ContainerHorista extends StatelessWidget {
       ),
       height: 150,
       padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
