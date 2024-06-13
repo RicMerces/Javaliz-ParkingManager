@@ -35,7 +35,7 @@ class _CreateMounthlyState extends State<CreateMounthly> {
       final mensalista =
           Mensalista(nome: nome, cpf: cpf, tel: telefone, placas: placas);
 
-      mensalistaController.createMensalista(mensalista);
+      mensalistaController.createMensalista(context, mensalista);
     }
 
     return Scaffold(
@@ -44,7 +44,7 @@ class _CreateMounthlyState extends State<CreateMounthly> {
         backgroundColor: Colors.white,
         foregroundColor: const Color.fromRGBO(0, 0, 0, 1),
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Criar Mensalista",
           style: TextStyle(
             color: Colors.black,

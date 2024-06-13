@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:parkings/controller/criar_mensalista_controller.dart';
-import 'package:parkings/widgets/container_horista.dart';
 import '../controller/horista_estacionado_controller.dart';
+import '../widgets/container_horista.dart';
 
 class HouristsOccupieds extends StatefulWidget {
   const HouristsOccupieds({Key? key}) : super(key: key);
@@ -21,6 +20,10 @@ class _HouristsOccupiedsState extends State<HouristsOccupieds> {
     horistasController.fetchHoristasEstacionados();
   }
 
+  Future<void> _refreshData() async {
+    await horistasController.fetchHoristasEstacionados();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,62 +39,57 @@ class _HouristsOccupiedsState extends State<HouristsOccupieds> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 15,
-              ),
-              child: Text(
-                "Veja vagas ocupadas de Horistas",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color(0xff191E26),
-                  fontWeight: FontWeight.bold,
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  "Veja vagas ocupadas de Horistas",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xff191E26),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Obx(() {
-              final horistasEstacionados =
-                  horistasController.horistasEstacionados;
+              Expanded(
+                child: Obx(() {
+                  final horistasEstacionados =
+                      horistasController.horistasEstacionados;
 
-              if (horistasEstacionados.isEmpty) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: Center(
-                    child: Text("Nenhum Horista foi encontrado estacionado"),
-                  ),
-                );
-              } else {
-                return Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      shrinkWrap: true,
+                  if (horistasEstacionados.isEmpty) {
+                    return const Center(
+                      child: Text("Nenhum Horista foi encontrado estacionado"),
+                    );
+                  } else {
+                    return ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
                       itemCount: horistasEstacionados.length,
                       itemBuilder: (BuildContext context, int index) {
                         final horista = horistasEstacionados[index];
                         return ContainerHorista(
                           isHourist: horista['isHorista'],
-                          delete: () => horistasController
-                              .registrarSaidaHorista(horista['placa']),
+                          delete: () async {
+                            await horistasController
+                                .registrarSaidaHorista(horista['placa']);
+                            await _refreshData();
+                          },
                           horista: horista['dataHoraEntrada'],
                           placa: horista['placa'],
                           id: index,
                         );
                       },
-                    ),
-                  ),
-                );
-              }
-            }),
-          ],
+                    );
+                  }
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

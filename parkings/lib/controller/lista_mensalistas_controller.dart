@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/mensalistas_criados.dart';
+import '../utils/helpers.dart';
 
 class MensalistasCriadosController extends GetxController {
   final mensalistasCriados = <MensalistaCriado>[].obs;
@@ -16,7 +17,7 @@ class MensalistasCriadosController extends GetxController {
   Future<void> fetchMensalistasCriados() async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost:8080/trazer-mensalistas-criados'),
+        Uri.parse('${Helpers.host}/trazer-mensalistas-criados'),
       );
 
       if (response.statusCode == 200) {

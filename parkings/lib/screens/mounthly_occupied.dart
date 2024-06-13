@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:parkings/controller/horista_estacionado_controller.dart';
-import 'package:parkings/widgets/container_mensalista.dart';
-
 import 'package:parkings/widgets/container_mensalista.dart';
 
 import '../controller/mensalista_estacionado_controller.dart';
@@ -67,8 +62,8 @@ class _MounthlyOccupiedState extends State<MounthlyOccupied> {
 
               if (mensalistaEstacionados.isEmpty) {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: Center(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: const Center(
                     child: Text("Nenhum Horista foi encontrado estacionado"),
                   ),
                 );
@@ -87,7 +82,7 @@ class _MounthlyOccupiedState extends State<MounthlyOccupied> {
                           horista: mensalista['dataHoraEntrada'],
                           placa: mensalista['placa'],
                           id: index,
-                          delete: () => 
+                          delete: () =>
                               mensalistaController.registrarSaidaMensalista(
                             mensalista['cpf'],
                           ),

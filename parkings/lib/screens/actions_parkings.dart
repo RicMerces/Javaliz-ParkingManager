@@ -5,6 +5,7 @@ import 'package:parkings/screens/create_hourist.dart';
 import 'package:parkings/screens/create_mounthly.dart';
 import 'package:parkings/screens/insert_mounthly.dart';
 import 'package:parkings/screens/mounthly_created_list.dart';
+import 'package:parkings/screens/mounthly_occupied.dart';
 
 class ActScreen extends StatelessWidget {
   const ActScreen({Key? key}) : super(key: key);
@@ -110,7 +111,7 @@ class ActScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => Get.to(MounthlyCreatedList()),
+              onTap: () => Get.to(MounthlyOccupied()),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 height: 50,

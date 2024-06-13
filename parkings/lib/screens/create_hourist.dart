@@ -57,7 +57,7 @@ class _CreateHouristState extends State<CreateHourist> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 BlueFormField(
@@ -70,7 +70,7 @@ class _CreateHouristState extends State<CreateHourist> {
             ParkBtn(
               title: "Cadastrar",
               onPressed: () {
-                registrarEntradaHorista(controller.text);
+                registrarEntradaHorista(context, controller.text);
                 print(controller.text);
               },
             ),

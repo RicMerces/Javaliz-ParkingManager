@@ -1,14 +1,14 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:parkings/utils/helpers.dart';
 
 class MensalistasEstacionadosController extends GetxController {
   var mensalistasEstacionados = <Map<String, dynamic>>[].obs;
 
   Future<void> fetchMensalistasEstacionados() async {
-    final response = await http.get(
-        Uri.parse('http://localhost:8080/trazer-mensalistas-estacionados'));
+    final response = await http
+        .get(Uri.parse('${Helpers.host}/trazer-mensalistas-estacionados'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -26,8 +26,7 @@ class MensalistasEstacionadosController extends GetxController {
 
   Future<void> registrarSaidaMensalista(String cpf) async {
     try {
-      final url =
-          Uri.parse('http://localhost:8080/registrar-saida-mensalista/$cpf');
+      final url = Uri.parse('${Helpers.host}/registrar-saida-mensalista/$cpf');
       final response = await http.patch(url);
 
       if (response.statusCode == 200) {
