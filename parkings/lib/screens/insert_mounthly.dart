@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:parkings/widgets/park_btn.dart';
+import 'package:parkings/widgets/blue_form_field.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 import '../controller/entrada_mensalista.dart';
-import '../widgets/blue_form_field.dart';
 
 class InsertMounthly extends StatefulWidget {
   const InsertMounthly({Key? key}) : super(key: key);
@@ -12,8 +13,10 @@ class InsertMounthly extends StatefulWidget {
 }
 
 class _InsertMounthlyState extends State<InsertMounthly> {
-  TextEditingController controller = TextEditingController();
-  final entradaMensalistaController = EntradaMensalistaController();
+  final MaskedTextController controller =
+      MaskedTextController(mask: '000.000.000-00');
+  final EntradaMensalistaController entradaMensalistaController =
+      EntradaMensalistaController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +47,40 @@ class _InsertMounthlyState extends State<InsertMounthly> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Preencha um campo com o CPF do mensalista",
+                        "Preencha o campo abaixo com o CPF do mensalista",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Vamos inseri-lo em uma vaga",
-                      ),
+                      SizedBox(height: 5),
+                      Text("Vamos inseri-lo em uma vaga"),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 BlueFormField(
                   controller: controller,
                   labelTitle: "CPF",
-                  labelText: "EX: 999-888-777-66",
+                  labelText: "EX: 999.888.777-66",
                 ),
               ],
             ),
             ParkBtn(
               title: "Inserir",
               onPressed: () {
-                final cpf = controller.text;
-                entradaMensalistaController.registrarEntradaMensalista(
-                  context,
-                  cpf,
-                );
+                if (controller.text.length == 14) {
+                  // Verifica se o CPF está completamente preenchido
+                  entradaMensalistaController.registrarEntradaMensalista(
+                      context, controller.text);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Por favor, preencha o CPF completamente."),
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
+                }
               },
             ),
           ],

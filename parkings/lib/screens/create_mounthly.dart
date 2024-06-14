@@ -40,18 +40,46 @@ class _CreateMounthlyState extends State<CreateMounthly> {
   }
 
   void addPlaca(String placa) {
-    setState(() {
-      placas.add(placa);
-      placaController.clear();
-      validateForm();
-    });
+    if (placa.length == 8) {
+      if (!placas.contains(placa.toUpperCase())) {
+        setState(() {
+          placas.add(placa.toUpperCase()); // Adiciona a placa à lista
+          placaController.clear();
+          validateForm();
+        });
+      } else {
+        // Exibe a Snackbar se a placa já foi adicionada anteriormente
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Esta placa já foi adicionada.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'ESSE TIPO DE PLACA É INVALIDO. PREENCHA OS CAMPOS CORRETAMENTE.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
   }
 
   void validateForm() {
-    final isValid = cpfController.text.isNotEmpty &&
+    final isCpfComplete =
+        cpfController.text.length == 14; // Checa se CPF está completo
+    final isTelefoneComplete =
+        telefoneController.text.length == 15; // Checa se telefone está completo
+    final hasPlacas =
+        placas.isNotEmpty; // Verifica se há pelo menos uma placa adicionada
+
+    final isValid = isCpfComplete &&
         nomeController.text.isNotEmpty &&
-        telefoneController.text.isNotEmpty &&
-        placas.isNotEmpty;
+        isTelefoneComplete &&
+        hasPlacas;
+
     isFormValid.value = isValid;
   }
 

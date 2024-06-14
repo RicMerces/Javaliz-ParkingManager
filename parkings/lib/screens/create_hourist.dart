@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkings/controller/criar_horista_controller.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart'; // Certifique-se de ter esta importação
 import 'package:parkings/widgets/blue_form_field.dart';
 import 'package:parkings/widgets/park_btn.dart';
 
@@ -11,7 +11,41 @@ class CreateHourist extends StatefulWidget {
 }
 
 class _CreateHouristState extends State<CreateHourist> {
-  TextEditingController controller = TextEditingController();
+  final MaskedTextController controller =
+      MaskedTextController(mask: 'AAA-0000');
+  final ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
+
+  void validateForm() {
+    // Verifica se a máscara foi completamente preenchida
+    isFormValid.value = controller.text.length == 8;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(validateForm);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void registrarEntradaHorista() {
+    if (isFormValid.value) {
+      print(controller.text);
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Formato de placa inválido. Insira no formato AAA-1234.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +82,12 @@ class _CreateHouristState extends State<CreateHourist> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Vamos inseri-lo em uma vaga",
-                      ),
+                      const SizedBox(height: 5),
+                      Text("Vamos inseri-lo em uma vaga"),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 BlueFormField(
                   controller: controller,
                   labelTitle: "Placa do Horista",
@@ -67,11 +95,14 @@ class _CreateHouristState extends State<CreateHourist> {
                 ),
               ],
             ),
-            ParkBtn(
-              title: "Cadastrar",
-              onPressed: () {
-                registrarEntradaHorista(context, controller.text);
-                print(controller.text);
+            ValueListenableBuilder<bool>(
+              valueListenable: isFormValid,
+              builder: (context, isValid, child) {
+                return ParkBtn(
+                  title: "Cadastrar",
+                  onPressed: isValid ? registrarEntradaHorista : () {},
+                  isEnabled: isValid,
+                );
               },
             ),
           ],
