@@ -29,9 +29,7 @@ class ParkBtn extends StatelessWidget {
                   ],
                 )
               : null,
-          color: isEnabled
-              ? null
-              : Colors.grey, // Background color for disabled state
+          color: isEnabled ? null : Colors.grey,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,9 +38,7 @@ class ParkBtn extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 20,
-                color: isEnabled
-                    ? Colors.white
-                    : Colors.black, // Text color for disabled state
+                color: isEnabled ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),

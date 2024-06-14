@@ -23,7 +23,6 @@ class EntradaMensalistaController extends GetxController {
           ),
         );
       } else {
-        // Decodifica a mensagem de erro do corpo da resposta JSON
         final Map<String, dynamic> errorResponse = json.decode(response.body);
         final String errorMessage =
             errorResponse['message'] ?? 'Erro desconhecido';

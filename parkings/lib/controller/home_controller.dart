@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../utils/helpers.dart';
 
 class HomeController extends GetxController {
-  var data = {}.obs; // Use 'obs' para observar alterações nos dados
+  var data = {}.obs;
 
   Future<void> fetchData(BuildContext context) async {
     try {
@@ -15,7 +15,6 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         data.value = json.decode(response.body);
       } else {
-        // Exibe o erro com SnackBar
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro na solicitação: ${response.statusCode}'),
@@ -25,7 +24,6 @@ class HomeController extends GetxController {
         );
       }
     } catch (error) {
-      // Exibe o erro com SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Erro ao fazer a chamada HTTP: $error'),
