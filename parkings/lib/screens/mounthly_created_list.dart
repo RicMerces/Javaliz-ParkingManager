@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../controller/lista_mensalistas_controller.dart';
 
 class MounthlyCreatedList extends StatefulWidget {
+  const MounthlyCreatedList({super.key});
+
   @override
   State<MounthlyCreatedList> createState() => _MounthlyCreatedListState();
 }
@@ -26,7 +28,7 @@ class _MounthlyCreatedListState extends State<MounthlyCreatedList> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Mensalistas criados",
           style: TextStyle(
             color: Colors.black,
@@ -65,16 +67,13 @@ class _MounthlyCreatedListState extends State<MounthlyCreatedList> {
                       children: [
                         Text(
                           "CPF: ${mensalista.cpf}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color(0xff2A74F7),
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
                           ),
                         ),
-                        SizedBox(height: 10),
-                        // Adicione outros campos do mensalista aqui, por exemplo:
-                        // Text("Nome: ${mensalista['nome']}"),
-                        // Text("Telefone: ${mensalista['tel']}"),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   );

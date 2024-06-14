@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart'; // Certifique-se de ter esta importação
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:parkings/widgets/blue_form_field.dart';
 import 'package:parkings/widgets/park_btn.dart';
+import '../controller/criar_horista_controller.dart';
 
 class CreateHourist extends StatefulWidget {
   const CreateHourist({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class _CreateHouristState extends State<CreateHourist> {
   final ValueNotifier<bool> isFormValid = ValueNotifier<bool>(false);
 
   void validateForm() {
-    // Verifica se a máscara foi completamente preenchida
     isFormValid.value = controller.text.length == 8;
   }
 
@@ -32,10 +32,9 @@ class _CreateHouristState extends State<CreateHourist> {
     super.dispose();
   }
 
-  void registrarEntradaHorista() {
+  void registrarEntrada() {
     if (isFormValid.value) {
-      print(controller.text);
-      Navigator.pop(context);
+      registrarEntradaHorista(context, controller.text);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -100,7 +99,7 @@ class _CreateHouristState extends State<CreateHourist> {
               builder: (context, isValid, child) {
                 return ParkBtn(
                   title: "Cadastrar",
-                  onPressed: isValid ? registrarEntradaHorista : () {},
+                  onPressed: isValid ? registrarEntrada : () {},
                   isEnabled: isValid,
                 );
               },

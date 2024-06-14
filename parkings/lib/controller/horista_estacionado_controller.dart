@@ -30,10 +30,34 @@ class HoristasEstacionadosController extends GetxController {
         final responseMessage = response.body;
         Get.dialog(
           Dialog(
-            insetPadding: const EdgeInsets.all(30),
             child: Container(
-              color: Colors.red,
-              child: Text(responseMessage),
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xff2A74F7),
+              ),
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Estacionamento de horista",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    responseMessage,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -53,6 +77,39 @@ class HoristasEstacionadosController extends GetxController {
       final response = await http.patch(url);
 
       if (response.statusCode == 200) {
+        Get.dialog(
+          Dialog(
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: const Color(0xff2A74F7),
+              ),
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "VAGAS EXCLUSIVAS",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    response.body,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
         print('Saída de mensalista registrada com sucesso!');
       } else {
         throw Exception(

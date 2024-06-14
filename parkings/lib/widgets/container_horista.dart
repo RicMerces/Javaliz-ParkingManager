@@ -23,7 +23,6 @@ class ContainerHorista extends StatelessWidget {
         color: !isHourist ? const Color(0xff2A74F7) : Color(0xff28D5E2),
         borderRadius: BorderRadius.circular(5),
       ),
-      height: 150,
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Column(
@@ -33,10 +32,12 @@ class ContainerHorista extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                horista,
-                style: TextStyle(
-                  color: !isHourist ? Colors.white : Color(0xff1C1B1F),
+              Expanded(
+                child: Text(
+                  horista,
+                  style: TextStyle(
+                    color: !isHourist ? Colors.white : Color(0xff1C1B1F),
+                  ),
                 ),
               ),
               GestureDetector(

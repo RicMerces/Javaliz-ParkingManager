@@ -26,7 +26,7 @@ class _InsertMounthlyState extends State<InsertMounthly> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Inserir mensalista",
           style: TextStyle(
             color: Colors.black,
@@ -43,7 +43,7 @@ class _InsertMounthlyState extends State<InsertMounthly> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -58,7 +58,7 @@ class _InsertMounthlyState extends State<InsertMounthly> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 BlueFormField(
                   controller: controller,
                   labelTitle: "CPF",
@@ -70,12 +70,11 @@ class _InsertMounthlyState extends State<InsertMounthly> {
               title: "Inserir",
               onPressed: () {
                 if (controller.text.length == 14) {
-                  // Verifica se o CPF está completamente preenchido
                   entradaMensalistaController.registrarEntradaMensalista(
                       context, controller.text);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text("Por favor, preencha o CPF completamente."),
                       duration: Duration(seconds: 3),
                     ),
