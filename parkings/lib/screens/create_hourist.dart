@@ -38,7 +38,7 @@ class _CreateHouristState extends State<CreateHourist> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(

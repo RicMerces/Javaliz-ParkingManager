@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 class BlueFormField extends StatefulWidget {
   const BlueFormField({
-    super.key,
+    Key? key,
     this.labelText = "",
     required this.controller,
     required this.labelTitle,
     this.subtitle = "",
-  });
+  }) : super(key: key);
 
   final TextEditingController controller;
   final String labelText;
-
   final String labelTitle;
   final String subtitle;
+
   @override
   State<BlueFormField> createState() => _BlueFormFieldState();
 }
@@ -26,17 +26,19 @@ class _BlueFormFieldState extends State<BlueFormField> {
       child: Column(
         children: [
           widget.labelTitle == "" || widget.labelTitle == null
-              ? SizedBox()
+              ? const SizedBox()
               : Container(
-                  margin: EdgeInsets.symmetric(vertical: 5),
+                  margin: const EdgeInsets.symmetric(vertical: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(widget.labelTitle,
-                          style: TextStyle(color: Colors.black)),
+                      Text(
+                        widget.labelTitle,
+                        style: const TextStyle(color: Colors.black),
+                      ),
                       widget.subtitle != ""
                           ? Text(widget.subtitle)
-                          : SizedBox(),
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -45,7 +47,7 @@ class _BlueFormFieldState extends State<BlueFormField> {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Color(0xff2A74F7),
                   width: 2,
                 ),
@@ -53,7 +55,7 @@ class _BlueFormFieldState extends State<BlueFormField> {
               labelText: widget.labelText,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Color(0xff2A74F7),
                   width: 2.0,
                 ),
